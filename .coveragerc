@@ -1,0 +1,8 @@
+[run]
+branch = True
+source = .
+omit =
+    setup.py
+    **/tests/*
+    **/__init__.py
+    demo*.py
