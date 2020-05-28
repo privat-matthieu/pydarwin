@@ -1,14 +1,14 @@
-# Pydarwin
+# pyDarwin
 A simple genetic algorithm designed to take user input for parameters such as a population size, the percentage of a population considered "elite", and the number of iterations of the algorithm to naturally find the most optimal result based on a fitness function.
 
-## Getting Pydarwin Into Your Project
-To use Pydarwin, you must first install it.
+## Getting pyDarwin Into Your Project
+To use pyDarwin, you must first install it.
 
 ```bash
 pip install pydarwin
 ```
 
-To use Pydarwin to its fullest extent, the following imports are required:
+To use pyDarwin to its fullest extent, the following imports are required:
 
 ```python
 from pydarwin import GA
@@ -16,10 +16,10 @@ from pydarwin.ChromosomeSpecifications import ChromosomeSpecifications
 ```
 
 ## Example Of Use - A Simple Cannon
-To demonstrate the use of Pydarwin, we can look at a simple cannon using basic principles of ballistics to find the optimal shot power and angle of fire to hit a defined target.
+To demonstrate the use of pyDarwin, we can look at a simple cannon using basic principles of ballistics to find the optimal shot power and angle of fire to hit a defined target.
 
 ### Cannon Set-Up
-Before we can implement Pydarwin's features, we must first define two basic things for this example: the target's location and the equation for projectile range. Here we define our target to be at d = 500.
+Before we can implement pyDarwin's features, we must first define two basic things for this example: the target's location and the equation for projectile range. Here we define our target to be at d = 500.
 
 ```python
 # The target's location
@@ -33,7 +33,7 @@ def rangeEquation(power, theta):
     return R
 ```
 
-### Using Pydarwin To Hit The Target
+### Using pyDarwin To Hit The Target
 The processes of finding the optimal target requires two steps. First, we must define what our chromosomes shall be. Second, we must define our fitness function that will analyze the different chromosomes.
 
 Step 1:
@@ -54,10 +54,10 @@ Step 2:
 def fitness(c):
     power = c["power"]
     theta = c["theta"]
-    
+
     R = rangeEquation(power, theta)
     distOff = abs(d - R)
-    
+
     if(distOff == 0):
         return sys.float_info.max
     else:
@@ -66,19 +66,19 @@ def fitness(c):
 
 In the second step, we create our fitness function. This is the function that shall define what constitutes an "optimum" chromosome. We start this fitness function by bringing our created chromosomes (c), and giving them the names "power" and "theta" to distinguish them.
 
-Next we call our range equation defined before we began using Pydarwin, using our chromosomes as arguments. This will allow the fitness function to see the various values for the power and angle created by our chromosomes.
+Next we call our range equation defined before we began using pyDarwin, using our chromosomes as arguments. This will allow the fitness function to see the various values for the power and angle created by our chromosomes.
 
-In this case, we want our optimal point to be the one that hits closest to our target (d). The way Pydarwin is built, the genetic algorithm will naturally take the chromosome with the highest value as the optimal, so we must return the inverse of our distance here. This way, the chromosome that hits closest to our target shall be considered the "largest" value by the algorithm. If we happen to hit exactly where we want, we return instead the highest possible float that we are able to. In this way, nothing could ever beat it since it is already the highest possible value, and shall be taken as our optimal chromosome.
+In this case, we want our optimal point to be the one that hits closest to our target (d). The way pyDarwin is built, the genetic algorithm will naturally take the chromosome with the highest value as the optimal, so we must return the inverse of our distance here. This way, the chromosome that hits closest to our target shall be considered the "largest" value by the algorithm. If we happen to hit exactly where we want, we return instead the highest possible float that we are able to. In this way, nothing could ever beat it since it is already the highest possible value, and shall be taken as our optimal chromosome.
 
-### Running Pydarwin
+### Running pyDarwin
 
-To run Pydarwin and allow the genetic algorithm to find the optimal chromosome for you, you simply need to run GA.solve, as shown:
+To run pyDarwin and allow the genetic algorithm to find the optimal chromosome for you, you simply need to run GA.solve, as shown:
 
 ```python
 result = GA.solve(cs, fitness, 2000, 0.2, 2000)
 ```
 
-The solve() method takes for parameters the chromosome specifications that you defined in Step 1 of Using Pydarwin (in this example they are cs), the fitness function that you defined in Step 2 of Using Pydarwin, the size of the population, the percentage (in decimal) of chromosomes that shall be considered "elite", and the number of iterations of the fitness function.
+The solve() method takes for parameters the chromosome specifications that you defined in Step 1 of Using pyDarwin (in this example they are cs), the fitness function that you defined in Step 2 of Using pyDarwin, the size of the population, the percentage (in decimal) of chromosomes that shall be considered "elite", and the number of iterations of the fitness function.
 
 What is happening in the solve() method at a glance:
 
@@ -96,4 +96,16 @@ What is happening in the solve() method at a glance:
 
 7. Return our best chromosome (located in index 0 after we sort the array of chromosomes).
 
-The solve() method and the methods it uses can be found in GA.py, located in the Pydarwin public Github repository.
+The solve() method and the methods it uses can be found in GA.py, located in the pyDarwin public Github repository.
+
+## How to contribute
+
+Fork the repository, make changes, open pull request. I'm happy to get your feedback.
+
+To setup your workspace:
+
+```bash
+make init
+```
+
+I've included `demo.py` to help run examples.
