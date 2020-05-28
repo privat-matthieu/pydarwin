@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
     name='pydarwin',
-    version='0.0.3',
+    version='0.0.4',
     description='A simple genetic algorithm for use in Python.',
     long_description=read('README.md'),
     long_description_content_type='text/markdown',

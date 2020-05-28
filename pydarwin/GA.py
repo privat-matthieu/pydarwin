@@ -4,7 +4,7 @@ import random
 from pydarwin.ChromosomeSpecifications import ChromosomeSpecifications
 
 
-def solve(chromosome_specs: ChromosomeSpecifications, fitness_function, population_size: int, elite_ratio: float, iterations: int):
+def solve(chromosome_specs: ChromosomeSpecifications, fitness_function, population_size: int, elite_ratio: float, iterations: int, eliteCut: float = 0.1):
     """ Executes the genetic optimization of the given chromosomes.
 
     Args:
@@ -19,7 +19,7 @@ def solve(chromosome_specs: ChromosomeSpecifications, fitness_function, populati
     for i in range(0, iterations):
         sort_population(population, fitness_function)
         elite = elite_selection(population, elite_ratio)
-        population = crossover(elite, population_size)
+        population = crossover(chromosome_specs, elite, population_size, eliteCut)
 
     return elite[0]
 
@@ -47,9 +47,16 @@ def elite_selection(population, elite_ratio):
     return population[: eliteIndex]
 
 
-def crossover(elite, population_size):
+def crossover(chromosome_specs, elite, population_size, eliteCut: float = 0.1):
     result = []
-    for i in range(0, population_size):
+    
+    superElite = elite[0]
+    result.append(superElite)
+    elite.pop(0)
+
+    popCut = int(eliteCut * population_size)
+
+    for i in range(0, popCut):
         subject1 = random.choice(elite)
         subject2 = random.choice(elite)
 
@@ -63,5 +70,9 @@ def crossover(elite, population_size):
             counter += 1
 
         result.append(offspring)
+
+    for i in range(popCut, population_size):
+        newOffspring = chromosome_specs.make_new()
+        result.append(newOffspring)
 
     return result
